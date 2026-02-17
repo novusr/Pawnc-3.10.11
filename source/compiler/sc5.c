@@ -229,6 +229,20 @@ static int errflag;
 static int errstart;    /* line number at which the instruction started */
 static int errline;     /* forced line number for the error message */
 static int errwarn;
+static int err_lastline,err_errorcount;
+static short err_lastfile;
+
+void error_init(void)
+{
+  errflag=0;
+  errstart=0;
+  errline=0;
+  errwarn=0;
+  memset(&warnstack,0,sizeof(warnstack));
+  err_lastline=0;
+  err_errorcount=0;
+  err_lastfile=0;
+}
 
 /*  error
  *
@@ -245,8 +259,6 @@ static int errwarn;
 SC_FUNC int error(long number,...)
 {
   static char *prefix[3]={ "error", "fatal error", "warning" };
-  static int lastline,errorcount;
-  static short lastfile;
   char *msg,*pre;
   va_list argptr;
   char string[128];
@@ -353,13 +365,13 @@ SC_FUNC int error(long number,...)
 
   errline=-1;
   /* check whether we are seeing many errors on the same line */
-  if ((start<0 && lastline!=fline) || lastline<start || lastline>fline || fcurrent!=lastfile)
-    errorcount=0;
-  lastline=fline;
-  lastfile=fcurrent;
+  if ((start<0 && err_lastline!=fline) || err_lastline<start || err_lastline>fline || fcurrent!=err_lastfile)
+    err_errorcount=0;
+  err_lastline=fline;
+  err_lastfile=fcurrent;
   if (number<200 || errwarn)
-    errorcount++;
-  if (errorcount>=3)
+    err_errorcount++;
+  if (err_errorcount>=3)
     error(107);         /* too many error/warning messages on one line */
 
   return 0;

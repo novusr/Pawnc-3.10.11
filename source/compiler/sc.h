@@ -868,6 +868,7 @@ SC_FUNC void outinstr(const char *name,emit_outval params[],int numparams);
 /* function prototypes in SC5.C */
 SC_FUNC int error(long number,...);
 SC_FUNC void errorset(int code,int line);
+void error_init(void);
 SC_FUNC void warnstack_init(void);
 SC_FUNC void warnstack_cleanup(void);
 SC_FUNC int error_suggest(int number,const char *name,const char *name2,int type,int subtype);
