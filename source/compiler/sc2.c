@@ -2121,6 +2121,10 @@ static const unsigned char *unpackedstring(const unsigned char *lptr,int *flags)
     }
     imlstring=MULTILINE|(*flags & RAWMODE);
     preprocess();
+    if (!freading) {
+      imlstring=0;
+      break;
+    }
     lptr=pline;
   } /* for */
   litadd(0);
@@ -2225,6 +2229,10 @@ static const unsigned char *packedstring(const unsigned char *lptr,int *flags)
     }
     imlstring=MULTILINE|(*flags & RAWMODE);
     preprocess();
+    if (!freading) {
+      imlstring=0;
+      break;
+    }
     lptr=pline;
   } /* for */
   /* save last code; make sure there is at least one terminating zero character */
