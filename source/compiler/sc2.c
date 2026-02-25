@@ -627,7 +627,7 @@ static int stripcomment(unsigned char *line)
         } else if (*line=='\"' || *line=='\''){        /* leave literals unaltered */
           c=*line;      /* ending quote, single or double */
           if (c=='"')
-            imlstring=MULTILINE|rawmode;
+            imlstring=sc_multiline ? (MULTILINE|rawmode) : 0;
           line+=1;
           while ((*line!=c || (rawmode==0 && *(line-1)==sc_ctrlchar)) && *line!='\0')
             line+=1;
@@ -2426,7 +2426,7 @@ SC_FUNC int lex(cell *lexvalue,char **lexsym)
   {                                     /* unpacked string literal */
     _lextok=tSTRING;
     stringflags=(*lptr==sc_ctrlchar) ? RAWMODE : 0;
-    stringflags|=(*lptr=='#' || (*lptr==sc_ctrlchar && *(lptr+1)=='#')) ? STRINGIZE : MULTILINE;
+    stringflags|=(*lptr=='#' || (*lptr==sc_ctrlchar && *(lptr+1)=='#')) ? STRINGIZE : (sc_multiline ? MULTILINE : 0);
     *lexvalue=_lexval=litidx;
     lptr+=1;            /* skip double quote */
     if ((stringflags & RAWMODE)!=0)
@@ -2448,11 +2448,11 @@ SC_FUNC int lex(cell *lexvalue,char **lexsym)
       if (*(lptr+2)=='#')
         stringflags |= STRINGIZE;
       else
-        stringflags |= MULTILINE;
+        stringflags |= sc_multiline ? MULTILINE : 0;
     } else if (*(lptr+1)=='#') {
       stringflags = STRINGIZE;
     } else {
-      stringflags = MULTILINE;
+      stringflags = sc_multiline ? MULTILINE : 0;
     }
     *lexvalue=_lexval=litidx;
     lptr+=2;            /* skip exclamation point and double quote */

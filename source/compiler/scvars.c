@@ -67,6 +67,7 @@ SC_VDEFINE int sc_asmfile= FALSE;           /* create .ASM file? */
 SC_VDEFINE int sc_listing= FALSE;           /* create .LST file? */
 SC_VDEFINE int sc_compress=TRUE;            /* compress bytecode? */
 SC_VDEFINE int sc_needsemicolon=TRUE;       /* semicolon required to terminate expressions? */
+SC_VDEFINE int sc_multiline=FALSE;          /* allow multiline strings? */
 SC_VDEFINE int sc_dataalign=sizeof(cell);   /* data alignment value */
 SC_VDEFINE int sc_alignnext=FALSE;          /* must frame of the next function be aligned? */
 SC_VDEFINE int pc_docexpr=FALSE;            /* must expression be attached to documentation comment? */

@@ -1008,6 +1008,7 @@ static void initglobals(void)
     sc_compress=FALSE;
   #endif
   sc_needsemicolon=FALSE;   /* semicolon required to terminate expressions? */
+  sc_multiline=FALSE;        /* multiline strings */
   sc_dataalign=sizeof(cell);
   pc_stksize=sDEF_AMXSTACK; /* default stack size */
   pc_amxlimit=0;         /* no limit on size of the abstract machine */
@@ -1324,6 +1325,9 @@ static void parseoptions(int argc,char **argv,char *oname,char *ename,char *pnam
       case '^':                 /* use ^ instead for escape characters */
         sc_ctrlchar='^';
         break;
+      case 'm':
+        sc_multiline=toggle_option(ptr,sc_multiline);
+        break;
       case ';':
         sc_needsemicolon=toggle_option(ptr,sc_needsemicolon);
         break;
@@ -1612,6 +1616,7 @@ static void usage(void)
     pc_printf("         -\\       use '\\' for escape characters\n");
     pc_printf("         -^       use '^' for escape characters\n");
     pc_printf("         -;[+/-]  require a semicolon to end each statement (default=%c)\n", sc_needsemicolon ? '+' : '-');
+    pc_printf("         -m[+/-]  allow multiline strings (default=%c)\n", sc_multiline ? '+' : '-');
     pc_printf("         -([+/-]  require parentheses for function invocation (default=%c)\n", optproccall ? '-' : '+');
     pc_printf("         sym=val  define constant \"sym\" with value \"val\"\n");
     pc_printf("         sym=     define constant \"sym\" with value 0\n");

@@ -994,6 +994,7 @@ SC_VDECL int sc_asmfile;      /* create .ASM file? */
 SC_VDECL int sc_listing;      /* create .LST file? */
 SC_VDECL int sc_compress;     /* compress bytecode? */
 SC_VDECL int sc_needsemicolon;/* semicolon required to terminate expressions? */
+SC_VDECL int sc_multiline;    /* allow multiline strings? */
 SC_VDECL int sc_dataalign;    /* data alignment value */
 SC_VDECL int sc_alignnext;    /* must frame of the next function be aligned? */
 SC_VDECL int pc_docexpr;      /* must expression be attached to documentation comment? */
